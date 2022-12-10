@@ -37,7 +37,6 @@ function useProvideAuth() {
 				userId: response.userId,
 				token: response.token,
 			};
-			console.log(userData);
 
 			setUser(userData);
 		}

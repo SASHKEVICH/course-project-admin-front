@@ -24,9 +24,9 @@ export const createUser = async (login, email, password) => {
 	};
 	const configInit = {
 		method: "POST",
-		body: JSON.stringify(data),
 		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data),
 	};
-	const request = `/users`;
+	const request = `/registration`;
 	return await genRequest(request, configInit);
 };

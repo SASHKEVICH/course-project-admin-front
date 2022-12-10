@@ -1,16 +1,24 @@
 import React from "react";
 // import RequireAuth from "./authetication/requireAuth";
-import { ProvideAuth } from "./authetication/useAuth";
+import { ProvideAuth } from "./auth/useAuth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import MainPage from "./pages/mainPage/mainPage";
-import LoginPage from "./authetication/login/login";
+import LoginPage from "./pages/authentication/login/login";
+import RegistrationPage from "./pages/authentication/registration/registration";
+
+import "./App.css";
 
 const routes = [
 	{
 		path: "/*",
 		name: "Login",
 		main: <LoginPage />,
+	},
+	{
+		path: "/registration",
+		name: "Registration",
+		main: <RegistrationPage />,
 	},
 	{
 		path: "/main",

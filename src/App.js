@@ -1,5 +1,5 @@
 import React from "react";
-// import RequireAuth from "./authetication/requireAuth";
+import RequireAuth from "./auth/requireAuth";
 import { ProvideAuth } from "./auth/useAuth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -23,7 +23,11 @@ const routes = [
 	{
 		path: "/main",
 		name: "Main",
-		main: <MainPage />,
+		main: (
+			<RequireAuth>
+				<MainPage />
+			</RequireAuth>
+		),
 	},
 ];
 

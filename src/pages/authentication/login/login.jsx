@@ -70,8 +70,12 @@ const LoginPage = () => {
 
 	const showPasswordIcon = () => {
 		return (
-			<InputAdornment position="end">
+			<InputAdornment
+				position="end">
 				<IconButton
+					sx={{
+						color: "#fff"
+					}}
 					aria-label="toggle password visibility"
 					onClick={handleClickShowPassword}
 				>
@@ -82,36 +86,27 @@ const LoginPage = () => {
 	};
 
 	return (
-		<div className="container">
+		<Stack className="container" spacing={3}>
 			<div className="login-box">
 				<Stack
 					direction="column"
 					className="container1"
-					spacing={2}
+					spacing={3}
 					alignItems="center"
 				>
-					<Typography fontSize={24} fontWeight={600} color={"#fff"}>
-						{" "}
-						Sign In
+					<Typography fontFamily={"-apple-system"} fontSize={24} fontWeight={600} color={"#fff"}>
+						Вход в аккаунт EHM
 					</Typography>
-					{/* <TextField
-						id="standard-basic"
-						label="Login"
-						variant="outlined"
-						fullWidth
-						onChange={(event) => handleLoginOnChange(event)}
-					/> */}
-
 					<RedTextField 
 						id="standard-basic"
-						label="Login"
+						label="Email"
 						variant="outlined"
 						fullWidth
 						onChange={(event) => handleLoginOnChange(event)}
 					/>
-					<TextField
+					<RedTextField
 						id="standard-basic-1"
-						label="Password"
+						label="Пароль"
 						variant="outlined"
 						fullWidth
 						type={showPassword ? "text" : "password"}
@@ -130,28 +125,35 @@ const LoginPage = () => {
 			<div className="login-button">
 				<Button
 					sx={{
-						color: "#ff3c38",
-						borderRadius: 5,
-						marginTop: 5,
+						backgroundColor: "#fff",
+						borderRadius: 2,
+						width: "100px",
+						"&:hover": {
+							backgroundColor: "#ff3c38"
+						}
 					}}
 					className="log_but"
 					variant="text"
 					onClick={() => handleSignInResponse()}
 				>
-					<Typography fontSize={15} color={"#fff"}>Sign In</Typography>
+					<Typography fontSize={15} color={"#000"}>Войти</Typography>
 				</Button>
 			</div>
 			<div className="links">
-				<Typography sx={{ fontStyle: "italic" }} color={"#fff"}>
-					Forgot Password
-				</Typography>
 				<Link to="/registration" style={{ textDecoration: "none" }}>
-					<Typography sx={{ fontStyle: "italic" }} color={"#fff"}>
-						Dont have an account? Click here to Sign Up
+					<Typography 
+						sx={{ 
+							fontFamily: "-apple-system", 
+							fontStyle: "italic",
+							"&:hover": {
+								color: "#ff3c38"
+							}
+						}} color={"#fff"}>
+						Зарегистрироваться
 					</Typography>
 				</Link>
 			</div>
-		</div>
+		</Stack>
 	);
 };
 

@@ -7,7 +7,44 @@ export const RedTextField = styled(TextField)({
 	},
 	"& .MuiOutlinedInput-root": {
 		"& fieldset": {
-			borderColor: "#FF3C38",
+			borderColor: "#fff",
+			borderRadius: 10,
 		},
+		'&:hover fieldset': {
+      borderColor: '#fff',
+    },
+		'&.Mui-focused fieldset': {
+      borderColor: '#FF3C38',
+    },
 	},
+	"& label": {
+		color: "#BBB5BD",
+		fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(',')
+	},
+	"& .MuiInputBase-input": {
+		color: "#fff",
+		fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(',')
+	}
 });

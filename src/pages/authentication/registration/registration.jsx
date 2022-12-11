@@ -17,6 +17,7 @@ import { RedTextField } from "../../../helpers/textFieldStyles";
 
 const RegistrationPage = () => {
 	const [login, setLogin] = useState("");
+	const [nickname, setNickname] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -40,34 +41,41 @@ const RegistrationPage = () => {
 		setErrorText(text);
 	};
 
-	const handleLoginOnChange = (e) => {
+	const handleOnChange = (e) => {
 		e.preventDefault();
 		disableErrorIfEnabled();
+	}
+
+	const handleLoginOnChange = (e) => {
+		handleOnChange(e);
 		setLogin(e.target.value);
 	};
 
+	const handleNicknameOnChange = (e) => {
+		handleOnChange(e);
+		setNickname(e.target.value);
+	};
+
 	const handleEmailOnChange = (e) => {
-		e.preventDefault();
-		disableErrorIfEnabled();
+		handleOnChange(e);
 		setEmail(e.target.value);
 	};
 
 	const handlePasswordOnChange = (e) => {
-		e.preventDefault();
-		disableErrorIfEnabled();
+		handleOnChange(e);
 		setPassword(e.target.value);
 	};
 
 	const handlePasswordConfirmOnChange = (e) => {
-		e.preventDefault();
-		disableErrorIfEnabled();
+		handleOnChange(e);
 		setPasswordConfirm(e.target.value);
 	};
 
 	const handleRegistrationResponse = async () => {
 		if (
 			login === "" ||
-			email === "" ||
+			nickname === "" ||
+			email === "" ||	
 			password === "" ||
 			passwordConfirm === ""
 		) {
@@ -77,6 +85,7 @@ const RegistrationPage = () => {
 
 		const emailRegular =
 			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 		if (!emailRegular.test(email)) {
 			enableError("Email is incorrect.");
 			return;
@@ -87,21 +96,22 @@ const RegistrationPage = () => {
 			return;
 		}
 
-		const responseSignUp = await auth.signUp(login, email, password);
-
-		if (responseSignUp === "failure") {
+		try {
+			await auth.signUp(login, nickname, email, password);
+		} catch (error) {
+			console.error(error);
 			enableError("Sign up failed.");
 			return;
 		}
 
-		const responseSignIn = await auth.signIn(login, password);
-
-		if (responseSignIn === "failure") {
+		try {
+			await auth.signIn(email, password);
+		} catch {
 			enableError("Sign in failed.");
 			return;
 		}
 
-		navigate(`/tasks`, { replace: true });
+		navigate(`/main`, { replace: true });
 	};
 
 	const handleClickShowPassword = () => {
@@ -130,7 +140,7 @@ const RegistrationPage = () => {
 				<Stack
 					direction="column"
 					className="container1"
-					spacing={2}
+					spacing={3}
 					alignItems="center"
 				>
 					<Typography 
@@ -144,11 +154,19 @@ const RegistrationPage = () => {
 					</Typography>
 					<RedTextField
 						type="text"
-						label="Логин"
+						label="ФИО"
 						variant="outlined"
 						className="StandardInput"
 						fullWidth
 						onChange={handleLoginOnChange}
+					/>
+					<RedTextField
+						type="text"
+						label="Никнэйм"
+						variant="outlined"
+						className="StandardInput"
+						fullWidth
+						onChange={handleNicknameOnChange}
 					/>
 					<RedTextField
 						type="email"

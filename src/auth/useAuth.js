@@ -15,33 +15,30 @@ export const useAuth = () => {
 function useProvideAuth() {
 	const [user, setUser] = useState(null);
 
-	const signIn = async (login, password) => {
-		const response = await userLogin(login, password);
-
-		if (response.message === "success") {
-			const userData = {
-				userId: response.userId,
-				token: response.token,
-			};
-			setUser(userData);
+	const signIn = async (email, password) => {
+		const response = await userLogin(email, password);
+		if (response.status >= 400 && response.status < 500) {
+			throw Error(response.status);
 		}
 
-		return response.message;
+		const userData = {
+			userId: response.userId,
+			token: response.token,
+		};
+		setUser(userData);
 	};
 
-	const signUp = async (login, email, password) => {
-		const response = await createUser(login, email, password);
-
-		if (response.message === "success") {
-			const userData = {
-				userId: response.userId,
-				token: response.token,
-			};
-
-			setUser(userData);
+	const signUp = async (login, nickname, email, password) => {
+		const response = await createUser(login, nickname, email, password);
+		if (response.status >= 400 && response.status < 500) {
+			throw Error(response.status);
 		}
 
-		return response.message;
+		const userData = {
+			userId: response.userId,
+			token: response.token,
+		};
+		setUser(userData);
 	};
 
 	const signOut = () => {

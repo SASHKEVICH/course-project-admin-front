@@ -24,9 +24,10 @@ const routes = [
 		path: "/main",
 		name: "Main",
 		main: (
-			<RequireAuth>
-				<MainPage />
-			</RequireAuth>
+			// <RequireAuth>
+			// 	<MainPage />
+			// </RequireAuth>
+			<MainPage />
 		),
 	},
 ];

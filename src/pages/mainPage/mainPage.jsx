@@ -1,10 +1,17 @@
+import React from "react";
+import { Typography, Box, Paper } from "@mui/material";
+import Masonry from '@mui/lab/Masonry';
+
 import { useAuth } from "../../auth/useAuth";
+import Header from "./header";
+
+import "./style.css"
 
 const MainPage = () => {
 	const auth = useAuth();
 	return (
-		<div>
-			<p>Главная страница</p>
+		<div className="container">
+			<Header />
 		</div>
 	)
 }

@@ -1,0 +1,13 @@
+.container {
+	background-color: #121113;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: fixed;
+	top: 7%;
+	width: 80vw;
+	margin: 0 auto
+}

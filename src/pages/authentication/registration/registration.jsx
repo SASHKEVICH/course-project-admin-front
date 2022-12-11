@@ -8,10 +8,12 @@ import {
 	InputAdornment,
 } from "@mui/material";
 import { useAuth } from "../../../auth/useAuth";
-// import "./style.css";
+import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+
+import { RedTextField } from "../../../helpers/textFieldStyles";
 
 const RegistrationPage = () => {
 	const [login, setLogin] = useState("");
@@ -110,6 +112,9 @@ const RegistrationPage = () => {
 		return (
 			<InputAdornment position="end">
 				<IconButton
+					sx={{
+						color: "#fff"
+					}}
 					aria-label="toggle password visibility"
 					onClick={handleClickShowPassword}
 				>
@@ -120,50 +125,55 @@ const RegistrationPage = () => {
 	}
 
 	return (
-		<div className="container">
-			<div className="box">
+		<Stack className="container" spacing={3}>
+			<div className="login-box">
 				<Stack
 					direction="column"
 					className="container1"
 					spacing={2}
 					alignItems="center"
 				>
-					<Typography fontSize={24} fontWeight={600} color={"#000000"}>
-						{" "}
-						Sign Up
+					<Typography 
+						sx={{
+							fontFamily: "-apple-system",
+							fontSize: 24,
+							fontWeight: 600,
+							color: "#fff"
+						}}>
+						Регистрация в EHM
 					</Typography>
-					<TextField
+					<RedTextField
 						type="text"
-						label="Login"
-						variant="standard"
+						label="Логин"
+						variant="outlined"
 						className="StandardInput"
 						fullWidth
 						onChange={handleLoginOnChange}
 					/>
-					<TextField
+					<RedTextField
 						type="email"
 						label="Email"
 						className="StandardInput"
-						variant="standard"
+						variant="outlined"
 						fullWidth
 						onChange={handleEmailOnChange}
 					/>
-					<TextField
-						label="Password"
+					<RedTextField
+						label="Пароль"
 						type={showPassword ? "text" : "password"}
 						className="StandardInput"
-						variant="standard"
+						variant="outlined"
 						fullWidth
 						onChange={handlePasswordOnChange}
 						InputProps={{
 							endAdornment: PasswordIcon(),
 						}}
 					/>
-					<TextField
-						label="Confirm Password"
+					<RedTextField
+						label="Повторите пароль"
 						type={showPassword ? "text" : "password"}
 						className="StandardInput"
-						variant="standard"
+						variant="outlined"
 						fullWidth
 						helperText={errorText}
 						error={error}
@@ -176,23 +186,32 @@ const RegistrationPage = () => {
 					className="button_Registration"
 					variant="text"
 					sx={{
-						color: "white",
-						borderRadius: 5,
-						marginTop: 5,
+						backgroundColor: "#fff",
+						borderRadius: 2,
+						width: "250px",
+						"&:hover": {
+							backgroundColor: "#ff3c38"
+						}
 					}}
 					onClick={handleRegistrationResponse}
 				>
-					<Typography fontSize={15}>Sign Up</Typography>
+					<Typography color={"#000"} fontSize={15}>Зарегистрироваться</Typography>
 				</Button>
 			</div>
 			<div className="links">
 				<Link to="/" style={{ textDecoration: "none" }}>
-					<Typography sx={{ fontStyle: "italic" }} color={"#000000"}>
-						Already have an account? Click here to Sign In
+					<Typography 
+						sx={{ 
+							fontFamily: "-apple-system",
+							fontStyle: "italic",
+							color: "#fff",
+							"&:hover": {color: "#ff3c38"}
+						}}>
+						Уже есть аккаунт? Нажмите здесь, чтобы войти.
 					</Typography>
 				</Link>
 			</div>
-		</div>
+		</Stack>
 	);
 };
 

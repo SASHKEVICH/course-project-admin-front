@@ -34,8 +34,8 @@ const itemData = [
 const MainPage = () => {
 	const navigate = useNavigate();
 
-	const handleCardClick = (title, path) => {
-		console.log(title, path);
+	const handleCardClick = (path) => {
+		navigate(path, { replace: true })
 	};
 
 	return (
@@ -58,7 +58,7 @@ const MainPage = () => {
 									color: "#1D1D1D"
 								}
 							}} 
-							onClick={() => handleCardClick(item.title, item.path)}
+							onClick={() => handleCardClick(item.path)}
 						>
 							<CardContent
 								sx={{ 

@@ -2,9 +2,9 @@ import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../auth/useAuth";
-import "./style.css";
+import styles from "./style"
 
-const Header = () => {
+const Header = ({ children }) => {
 	const auth = useAuth();
 	const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const Header = () => {
 	};
 
 	return (
-		<div className="header">
+		<div style={styles.header}>
 			<Typography 
 				sx={{
 					color: "#ffffff",
@@ -22,7 +22,7 @@ const Header = () => {
 					fontSize: 34,
 					fontWeight: "bold",
 				}}>
-				Главная
+				{children}
 			</Typography>
 			<Button
 				sx={{

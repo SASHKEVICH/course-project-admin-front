@@ -4,9 +4,9 @@ import Masonry from '@mui/lab/Masonry';
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../auth/useAuth";
-import Header from "./header";
+import Header from "../header/header";
 
-import "./style.css"
+import styles from "./styles"
 
 const itemData = [
 	{
@@ -39,9 +39,9 @@ const MainPage = () => {
 	};
 
 	return (
-		<div className="container">
-			<Header />
-			<Box sx={{ width: "80vw", height: "100vh" }}>
+		<div style={styles.container}>
+			<Header>Главная</Header>
+			<Box sx={{ width: "80vw", margin: "0 auto"  }}>
 				<Masonry columns={3} spacing={5} sx={{width: "100%", margin: "1% auto 0 auto"}}>
         {itemData.map((item, index) => (
 					<Card 

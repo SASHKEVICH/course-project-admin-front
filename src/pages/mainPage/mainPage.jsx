@@ -3,7 +3,6 @@ import { Typography, Box, Card, CardContent, CardActionArea } from "@mui/materia
 import Masonry from '@mui/lab/Masonry';
 import { useNavigate } from "react-router-dom";
 
-import { useAuth } from "../../auth/useAuth";
 import Header from "../header/header";
 
 import styles from "./styles"

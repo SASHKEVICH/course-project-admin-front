@@ -22,8 +22,8 @@ function useProvideAuth() {
 		}
 
 		const userData = {
-			userId: response.userId,
-			token: response.token,
+			userId: response.body.userId,
+			token: response.body.token,
 		};
 		setUser(userData);
 	};
@@ -35,8 +35,8 @@ function useProvideAuth() {
 		}
 
 		const userData = {
-			userId: response.userId,
-			token: response.token,
+			userId: response.body.userId,
+			token: response.body.token,
 		};
 		setUser(userData);
 	};

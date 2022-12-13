@@ -10,5 +10,6 @@ export const getAllAlbums = async (token) => {
 			"x-access-token": token,
 		},
 	};
-	return await genRequest(defaultRoute, configInit);
+	const response = await genRequest(defaultRoute, configInit);
+	return response.body.info;
 };

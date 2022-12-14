@@ -7,15 +7,24 @@ const styles = {
 		height: "100vh",
 	},
 	table: {
-		width: "77vw",
+		width: "80vw",
 		margin: "2% auto 0 auto",
 	},
 	dataGridMain: {
 		"& .MuiDataGrid-main": {
 			color: "white",
 		},
+		"& .css-rtrcn9-MuiTablePagination-root": {
+			color: "white",
+		},
+		"& .css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled": {
+			color: "white",
+		},
 		"& .MuiDataGrid-cell:hover": {
 			color: "#ff3c38",
+		},
+		"& .css-de9k3v-MuiDataGrid-selectedRowCount": {
+			color: "white",
 		},
 		"& .MuiCheckbox-root svg path": {
 			display: "none",
@@ -57,6 +66,12 @@ const styles = {
 				top: "39%",
 				border: 0,
 			},
+	},
+	tableButtons: {
+		display: "flex",
+		flexDirection: "row",
+		marginTop: "3%",
+		justifyContent: "space-between",
 	},
 };
 

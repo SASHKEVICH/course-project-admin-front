@@ -32,8 +32,8 @@ const Header = ({ children }) => {
 					width: "100px",
 					color: "#000",
 					"&:hover": {
-						backgroundColor: "#ff3c38"
-					}
+						backgroundColor: "#ff3c38",
+					},
 				}}
 				onClick={() => handleSignOut()}>
 				Выйти

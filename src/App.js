@@ -7,6 +7,8 @@ import MainPage from "./pages/mainPage/mainPage";
 import LoginPage from "./pages/authentication/login/login";
 import RegistrationPage from "./pages/authentication/registration/registration";
 
+import AlbumsPage from "./pages/albumPage/albumsPage";
+
 import "./App.css";
 
 const routes = [
@@ -29,6 +31,11 @@ const routes = [
 			// </RequireAuth>
 			<MainPage />
 		),
+	},
+	{
+		path: "/albums",
+		name: "Albums",
+		main: <AlbumsPage />,
 	},
 ];
 

@@ -7,12 +7,12 @@ import {
 	InputAdornment,
 } from "@mui/material";
 import { useAuth } from "../../../auth/useAuth";
-import "./style.css"
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 
 import { RedTextField } from "../../../helpers/textFieldStyles";
+import styles from "./styles"
 
 const LoginPage = () => {
 	const auth = useAuth();
@@ -85,8 +85,8 @@ const LoginPage = () => {
 	};
 
 	return (
-		<Stack className="container" spacing={3}>
-			<div className="login-box">
+		<Stack style={styles.container} spacing={3}>
+			<div style={styles.loginBox}>
 				<Stack
 					direction="column"
 					className="container1"

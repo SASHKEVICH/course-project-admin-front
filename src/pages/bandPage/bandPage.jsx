@@ -8,8 +8,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 import Header from "../header/header";
 import { RedTextField } from "../../helpers/textFieldStyles"
-import { getAllAlbums, createAlbum, 
-	deleteAlbums, getAlbumTypes, updateAlbum, getBandsShort, postAlbumToBand } from "../../requests/albumsRequest";
+import { getAllBands, createBand, 
+	deleteBand, updateBand, postGenreToBand } from "../../requests/bandsRequest";
+import { getAllGenres } from "../../requests/genresRequest";
 import { useAuth } from "../../auth/useAuth";
 
 import styles from "./styles";
@@ -22,20 +23,19 @@ export function SortedAscendingIcon() {
   return <ArrowUpwardIcon sx={{ color: "#ff3c38", fontSize: 18 }} />;
 }
 
-const AlbumsPage = () => {
+const BandsPage = () => {
 	const { user } = useAuth();
 	const token = user.token;
 
-	const [albums, setAlbums] = useState([]);
+	const [bands, setBands] = useState([]);
+	const [bandsGenres, setBandsGenres] = useState([]);
 	const [openAddDialog, setOpenAddDialog] = useState(false);
 	const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 	const [openHistoryDialog, setOpenHistoryDialog] = useState(false);
-	const [newAlbumTitle, setNewAlbumTitle] = useState("");
-	const [albumHistory, setAlbumHistory] = useState("");
+	const [newBandTitle, setNewBandTitle] = useState("");
+	const [bandHistory, setBandHistory] = useState("");
 	const [editingRow, setEditingRow] = useState();
-	const [selectedAlbums, setSelectedAlbums] = useState([]);
-	const [albumTypes, setAlbumTypes] = useState([]);
-	const [bands, setBands] = useState([]);
+	const [selectedBands, setSelectedBands] = useState([]);
 
 	const columns = [
 		{
@@ -45,47 +45,36 @@ const AlbumsPage = () => {
 			editable: true,
 		},
 		{
-			field: 'album_cover_path',
-			headerName: 'Путь до обложки',
+			field: 'photo_path',
+			headerName: 'Путь до фото',
 			width: 200,
 			editable: true,
 		},
 		{
-			field: 'released',
-			headerName: 'Дата релиза',
+			field: 'founded',
+			headerName: 'Дата основания',
 			type: 'date',
 			width: 140,
 			editable: true,
 			valueGetter: ({ value }) => value && new Date(value),
 		},
 		{
-			field: 'explicit',
-			headerName: 'Откровенный',
-			type: 'singleSelect',
+			field: 'ended',
+			headerName: 'Дата распада',
+			type: 'date',
+			width: 140,
 			editable: true,
-			width: 150,
-			valueOptions: ["true", "false"]
+			valueGetter: ({ value }) => value && new Date(value),
 		},
 		{
-			field: 'type',
-			headerName: 'Тип',
+			field: 'genre',
+			headerName: 'Жанр',
 			editable: true,
-			width: 80,
+			width: 120,
 			type: 'singleSelect',
 			valueOptions: ({ row }) => {
-				const types = albumTypes.map(type => type.type)
-				return types;
-			}
-		},
-		{
-			field: 'band',
-			headerName: 'Коллектив',
-			editable: true,
-			width: 150,
-			type: 'singleSelect',
-			valueOptions: ({ row }) => {
-				const band = bands.map(band => band.title)
-				return band;
+				const genres = bandsGenres.map(genre => genre.name)
+				return genres;
 			}
 		},
 		{
@@ -121,33 +110,24 @@ const AlbumsPage = () => {
 	};
 
 	useEffect(() => {
-		getAlbums();
-		getTypes();
 		getBands();
+		getGenres();
 	}, []);
-
-	const getAlbums = async () => {
-		try {
-			const newAlbums = await getAllAlbums(token);
-			setAlbums(newAlbums);
-		} catch (error) {
-			console.log(error)
-		}
-	};
-
-	const getTypes = async () => {
-		try {
-			const rawTypes = await getAlbumTypes(token);
-			setAlbumTypes(rawTypes);
-		} catch (error) {
-			console.log(error)
-		}
-	};
 
 	const getBands = async () => {
 		try {
-			const bands = await getBandsShort(token);
-			setBands(bands);
+			const newBands = await getAllBands(token);
+			console.log(newBands)
+			setBands(newBands);
+		} catch (error) {
+			console.log(error)
+		}
+	};
+
+	const getGenres = async () => {
+		try {
+			const rawGenres = await getAllGenres(token);
+			setBandsGenres(rawGenres);
 		} catch (error) {
 			console.log(error)
 		}
@@ -155,11 +135,11 @@ const AlbumsPage = () => {
 
 	const handleAddAlbum = async () => {
 		try {
-			await createAlbum(newAlbumTitle, token);
+			await createBand(newBandTitle, token);
 		} catch (error) {
 			console.log(error)
 		}
-		getAlbums();
+		getBands();
 		
 		handleCloseAddDialog()
 	};
@@ -167,7 +147,7 @@ const AlbumsPage = () => {
 	const handleSaveAlbumHistory = () => {
 		const updatedRow = {
 			...editingRow,
-			history: albumHistory
+			history: bandHistory
 		};
 		handleCellFocusOut(updatedRow);
 		handleCloseHistoryDialog();
@@ -175,42 +155,42 @@ const AlbumsPage = () => {
 
 	const handleDeleteAlbums = async () => {
 		try {
-			await deleteAlbums(selectedAlbums, token);
+			await deleteBand(selectedBands, token);
 		} catch (error) {
 			console.log(error)
 		}
-		getAlbums();
+		getBands();
 		
 		handleCloseDeleteDialog()
 	};
 
 	const handleCellFocusOut = async (row) => {
-		const albumType = albumTypes.find(type => type.type === row.type);
-		const band = bands.find(band => band.title === row.band);
-		const formattedReleaseDate = dateFormat(row.released, "yyyy-mm-dd'T'HH:MM:ss'Z'");
-		const updatedAlbum = {
-			album_id: row.album_id,
-			band: band === undefined ? undefined : band.band_id,
+		const genre = bandsGenres.find(genre => genre.name === row.genre);
+		const formattedFoundedDate = dateFormat(row.founded ?? undefined, "yyyy-mm-dd'T'HH:MM:ss'Z'");
+		const formattedEndedDate = dateFormat(row.ended ?? undefined, "yyyy-mm-dd'T'HH:MM:ss'Z'");
+		const updatedBand = {
+			band_id: row.band_id,
 			title: row.title,
-			album_cover_path: row.album_cover_path,
-			released: formattedReleaseDate,
-			explicit: row.explicit === 'true',
+			photo_path: row.photo_path,
+			founded: formattedFoundedDate,
+			ended: formattedEndedDate,
 			history: row.history,
-			type: albumType === undefined ? undefined : albumType.album_type_id,
+			origin_city: row.origin_city,
+			country: row.country
 		};
-		await updateAlbum(updatedAlbum, token);
+		await updateBand(updatedBand, token);
 
-		await postAlbumToBand(row.album_id, band.band_id, token);
+		await postGenreToBand(row.band_id, genre.genre_id, token);
 	};
 
 	const handleNewAlbumTitleChanged = (e) => {
 		const newTitle = e.target.value;
-		setNewAlbumTitle(newTitle);
+		setNewBandTitle(newTitle);
 	};
 
 	const handleHistoryChanged = (e) => {
 		const newHistory = e.target.value;
-		setAlbumHistory(newHistory);
+		setBandHistory(newHistory);
 	};
 
 	const handleOpenAddDialog = () => {
@@ -240,27 +220,27 @@ const AlbumsPage = () => {
 
 	return (
 		<div style={styles.container}>
-			<Header showBackButton={true}>Альбомы</Header>
+			<Header showBackButton={true}>Группы</Header>
 			<Box style={styles.table}>
 				<DataGrid
 					sx={styles.dataGridMain}
-					getRowId={(row) => row.album_id}
-					rows={albums}
+					getRowId={(row) => row.band_id}
+					rows={bands}
 					columns={columns}
 					autoHeight
 					pageSize={10}
-					loading={albums == null ? true : false}
+					loading={bands == null ? true : false}
 					checkboxSelection
 					disableSelectionOnClick
 					experimentalFeatures={{ newEditingApi: true }}
-					onSelectionModelChange={(ids) => setSelectedAlbums(ids)}
+					onSelectionModelChange={(ids) => setSelectedBands(ids)}
 					processRowUpdate={(newRow) => {
 						handleCellFocusOut(newRow);
 						return newRow
 					}}
 					onCellClick={params => {
 						if (params.field === "history") {
-							setAlbumHistory(params.value);
+							setBandHistory(params.value);
 							setEditingRow(params.row);
 						}
 					}}
@@ -283,7 +263,7 @@ const AlbumsPage = () => {
 							},
 						}}
 						onClick={handleOpenDeleteDialog}
-						disabled={selectedAlbums.length === 0}
+						disabled={selectedBands.length === 0}
 					>
 						Удалить
 					</Button>
@@ -307,7 +287,7 @@ const AlbumsPage = () => {
 					<DialogTitle sx={{fontFamily: '-apple-system'}}>Добавить альбом</DialogTitle>
 					<DialogContent>
 						<DialogContentText sx={{fontFamily: '-apple-system'}}>
-							Введите название альбома, чтобы добавить его в EHM.
+							Введите название группы, чтобы добавить его в EHM.
 						</DialogContentText>
 						<RedTextField
 							sx={{
@@ -330,7 +310,7 @@ const AlbumsPage = () => {
 							autoFocus
 							margin="dense"
 							id="album"
-							label="Название альбома"
+							label="Название группы"
 							type="text"
 							fullWidth
 							onChange={(e) => handleNewAlbumTitleChanged(e)}
@@ -368,10 +348,10 @@ const AlbumsPage = () => {
 					</DialogActions>
       	</Dialog>
 				<Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-					<DialogTitle sx={{fontFamily: '-apple-system'}}>Удаление альбомов</DialogTitle>
+					<DialogTitle sx={{fontFamily: '-apple-system'}}>Удаление групп</DialogTitle>
 					<DialogContent>
 						<DialogContentText sx={{fontFamily: '-apple-system'}}>
-							Вы действительно хотите удалить выделенные альбомы?
+							Вы действительно хотите удалить выделенные группы?
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
@@ -409,7 +389,7 @@ const AlbumsPage = () => {
 					<DialogTitle sx={{fontFamily: '-apple-system'}}>Изменить историю</DialogTitle>
 					<DialogContent>
 						<DialogContentText sx={{fontFamily: '-apple-system'}}>
-							В поле введите историю альбома.
+							В поле введите историю группы.
 						</DialogContentText>
 						<RedTextField
 							sx={{
@@ -436,7 +416,7 @@ const AlbumsPage = () => {
 							id="albumHistory"
 							label="История"
 							type="text"
-							value={albumHistory ?? ""}
+							value={bandHistory ?? ""}
 							onChange={(e) => handleHistoryChanged(e)}
 						/>
 					</DialogContent>
@@ -476,4 +456,4 @@ const AlbumsPage = () => {
 	);
 };
 
-export default AlbumsPage;
+export default BandsPage;

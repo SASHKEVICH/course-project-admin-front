@@ -24,6 +24,7 @@ export function SortedAscendingIcon() {
 
 const AlbumsPage = () => {
 	const { user } = useAuth();
+	const token = user.token;
 
 	const [albums, setAlbums] = useState([]);
 	const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -35,7 +36,6 @@ const AlbumsPage = () => {
 	const [selectedAlbums, setSelectedAlbums] = useState([]);
 	const [albumTypes, setAlbumTypes] = useState([]);
 	const [bands, setBands] = useState([]);
-	const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOSwiZW1haWwiOiIxMjNAMTIzLnJ1IiwiaWF0IjoxNjcxMDMwNTI2LCJleHAiOjE2NzEwMzc3MjZ9.Aau9zW3RKoXvcmbFPhKiIfUVv2JjWtzcaP1RSS42L98"
 
 	const columns = [
 		{
@@ -169,7 +169,6 @@ const AlbumsPage = () => {
 			...editingRow,
 			history: albumHistory
 		};
-		// setEditingRow(updatedRow);
 		handleCellFocusOut(updatedRow);
 		handleCloseHistoryDialog();
 	};
@@ -241,7 +240,7 @@ const AlbumsPage = () => {
 
 	return (
 		<div style={styles.container}>
-			<Header>Альбомы</Header>
+			<Header showBackButton={true}>Альбомы</Header>
 			<Box style={styles.table}>
 				<DataGrid
 					sx={styles.dataGridMain}

@@ -35,7 +35,11 @@ const routes = [
 	{
 		path: "/albums",
 		name: "Albums",
-		main: <AlbumsPage />,
+		main: (
+			<RequireAuth>
+				<AlbumsPage />
+			</RequireAuth>
+		),
 	},
 ];
 

@@ -40,7 +40,7 @@ const MainPage = () => {
 	return (
 		<div style={styles.container}>
 			<Header>Главная</Header>
-			<Box sx={{ width: "80vw", margin: "0 auto"  }}>
+			<Box sx={{ width: "83vw", margin: "0 auto"  }}>
 				<Masonry columns={3} spacing={5} sx={{width: "100%", margin: "1% auto 0 auto"}}>
         {itemData.map((item, index) => (
 					<Card 

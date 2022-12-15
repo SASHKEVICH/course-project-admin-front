@@ -70,7 +70,7 @@ const styles = {
 	tableButtons: {
 		display: "flex",
 		flexDirection: "row",
-		marginTop: "3%",
+		marginTop: "2%",
 		justifyContent: "space-between",
 	},
 };

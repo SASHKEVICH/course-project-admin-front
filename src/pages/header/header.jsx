@@ -1,10 +1,10 @@
 import { Button, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/useAuth";
 import styles from "./style"
 
-const Header = ({ children }) => {
+const Header = ({ showBackButton, children }) => {
 	const auth = useAuth();
 	const navigate = useNavigate();
 
@@ -15,15 +15,30 @@ const Header = ({ children }) => {
 
 	return (
 		<div style={styles.header}>
-			<Typography 
-				sx={{
-					color: "#ffffff",
-					fontFamily: "-apple-system",
-					fontSize: 34,
-					fontWeight: "bold",
-				}}>
-				{children}
-			</Typography>
+			<div style={styles.leftItem}>
+				<Link to="/main" style={{ textDecoration: "none" }}>
+					<Typography
+						display={showBackButton ? 'block' : 'none'}
+						sx={{ 
+							fontFamily: "-apple-system", 
+							fontStyle: "italic",
+							"&:hover": {
+								color: "#ff3c38"
+							}
+						}} color={"#fff"}>
+						{"< Назад"}
+					</Typography>
+				</Link>
+				<Typography 
+					sx={{
+						color: "#ffffff",
+						fontFamily: "-apple-system",
+						fontSize: 34,
+						fontWeight: "bold",
+					}}>
+					{children}
+				</Typography>
+			</div>
 			<Button
 				sx={{
 					backgroundColor: "#fff",

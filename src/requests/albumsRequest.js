@@ -91,6 +91,22 @@ export const postAlbumToBand = async (albumId, bandId, token) => {
 	await genRequest(route, configInit);
 };
 
+export const postGenreToAlbum = async (albumId, genreId, token) => {
+	const configInit = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"x-access-token": token,
+		},
+		body: JSON.stringify({
+			genreId: genreId,
+			albumId: albumId,
+		}),
+	};
+	const route = defaultRoute + "/add-genre";
+	await genRequest(route, configInit);
+};
+
 export const deleteAlbums = async (ids, token) => {
 	const configInit = {
 		method: "DELETE",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { Box, Button, Stack, Dialog,
-	DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+	DialogTitle, DialogContent, DialogContentText, DialogActions, getCardMediaUtilityClass } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -9,7 +9,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Header from "../header/header";
 import { RedTextField } from "../../helpers/textFieldStyles"
 import { getAllAlbums, createAlbum, 
-	deleteAlbums, getAlbumTypes, updateAlbum, getBandsShort, postAlbumToBand } from "../../requests/albumsRequest";
+	deleteAlbums, getAlbumTypes, updateAlbum, getBandsShort, postAlbumToBand, postGenreToAlbum } from "../../requests/albumsRequest";
+import { getAllGenres } from "../../requests/genresRequest";
 import { useAuth } from "../../auth/useAuth";
 
 import styles from "./styles";
@@ -27,6 +28,9 @@ const AlbumsPage = () => {
 	const token = user.token;
 
 	const [albums, setAlbums] = useState([]);
+	const [albumTypes, setAlbumTypes] = useState([]);
+	const [bands, setBands] = useState([]);
+	const [genres, setGenres] = useState([]);
 	const [openAddDialog, setOpenAddDialog] = useState(false);
 	const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 	const [openHistoryDialog, setOpenHistoryDialog] = useState(false);
@@ -34,8 +38,6 @@ const AlbumsPage = () => {
 	const [albumHistory, setAlbumHistory] = useState("");
 	const [editingRow, setEditingRow] = useState();
 	const [selectedAlbums, setSelectedAlbums] = useState([]);
-	const [albumTypes, setAlbumTypes] = useState([]);
-	const [bands, setBands] = useState([]);
 
 	const columns = [
 		{
@@ -75,6 +77,17 @@ const AlbumsPage = () => {
 			valueOptions: ({ row }) => {
 				const types = albumTypes.map(type => type.type)
 				return types;
+			}
+		},
+		{
+			field: 'genre',
+			headerName: 'Жанр',
+			editable: true,
+			width: 80,
+			type: 'singleSelect',
+			valueOptions: ({ row }) => {
+				const rowGenres = genres.map(genre => genre.name)
+				return rowGenres;
 			}
 		},
 		{
@@ -124,6 +137,7 @@ const AlbumsPage = () => {
 		getAlbums();
 		getTypes();
 		getBands();
+		getGenres();
 	}, []);
 
 	const getAlbums = async () => {
@@ -148,6 +162,15 @@ const AlbumsPage = () => {
 		try {
 			const bands = await getBandsShort(token);
 			setBands(bands);
+		} catch (error) {
+			console.log(error)
+		}
+	};
+
+	const getGenres = async () => {
+		try {
+			const genres = await getAllGenres(token);
+			setGenres(genres);
 		} catch (error) {
 			console.log(error)
 		}
@@ -187,6 +210,7 @@ const AlbumsPage = () => {
 	const handleCellFocusOut = async (row) => {
 		const albumType = albumTypes.find(type => type.type === row.type);
 		const band = bands.find(band => band.title === row.band);
+		const genre = genres.find(genre => genre.name === row.genre);
 		const formattedReleaseDate = row.released != null ? dateFormat(row.released, "yyyy-mm-dd'T'HH:MM:ss'Z'") : null;
 		const updatedAlbum = {
 			album_id: row.album_id,
@@ -201,6 +225,7 @@ const AlbumsPage = () => {
 		await updateAlbum(updatedAlbum, token);
 
 		await postAlbumToBand(row.album_id, band.band_id, token);
+		await postGenreToAlbum(row.album_id, genre.genre_id, token);
 	};
 
 	const handleNewAlbumTitleChanged = (e) => {

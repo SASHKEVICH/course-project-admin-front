@@ -11,6 +11,7 @@ import AlbumsPage from "./pages/albumPage/albumsPage";
 import BandsPage from "./pages/bandPage/bandPage";
 import MembersPage from "./pages/memberPage/memberPage";
 import SongsPage from "./pages/songPage/songPage";
+import GenresPage from "./pages/genrePage/genrePage";
 
 import "./App.css";
 
@@ -68,6 +69,15 @@ const routes = [
 		main: (
 			<RequireAuth>
 				<SongsPage />
+			</RequireAuth>
+		),
+	},
+	{
+		path: "/genres",
+		name: "Genres",
+		main: (
+			<RequireAuth>
+				<GenresPage />
 			</RequireAuth>
 		),
 	},

@@ -117,7 +117,6 @@ const BandsPage = () => {
 	const getBands = async () => {
 		try {
 			const newBands = await getAllBands(token);
-			console.log(newBands)
 			setBands(newBands);
 		} catch (error) {
 			console.log(error)
@@ -166,8 +165,8 @@ const BandsPage = () => {
 
 	const handleCellFocusOut = async (row) => {
 		const genre = bandsGenres.find(genre => genre.name === row.genre);
-		const formattedFoundedDate = dateFormat(row.founded ?? undefined, "yyyy-mm-dd'T'HH:MM:ss'Z'");
-		const formattedEndedDate = dateFormat(row.ended ?? undefined, "yyyy-mm-dd'T'HH:MM:ss'Z'");
+		const formattedFoundedDate = row.founded != null ? dateFormat(row.founded, "yyyy-mm-dd'T'HH:MM:ss'Z'") : null;
+		const formattedEndedDate = row.ended != null ? dateFormat(row.ended, "yyyy-mm-dd'T'HH:MM:ss'Z'") : null;
 		const updatedBand = {
 			band_id: row.band_id,
 			title: row.title,

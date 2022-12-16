@@ -187,7 +187,7 @@ const AlbumsPage = () => {
 	const handleCellFocusOut = async (row) => {
 		const albumType = albumTypes.find(type => type.type === row.type);
 		const band = bands.find(band => band.title === row.band);
-		const formattedReleaseDate = dateFormat(row.released, "yyyy-mm-dd'T'HH:MM:ss'Z'");
+		const formattedReleaseDate = row.released != null ? dateFormat(row.released, "yyyy-mm-dd'T'HH:MM:ss'Z'") : null;
 		const updatedAlbum = {
 			album_id: row.album_id,
 			band: band === undefined ? undefined : band.band_id,

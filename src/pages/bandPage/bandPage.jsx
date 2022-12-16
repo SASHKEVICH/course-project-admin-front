@@ -280,11 +280,11 @@ const BandsPage = () => {
 						}}
 						onClick={handleOpenAddDialog}
 					>
-						Добавить альбом
+						Добавить группу
 					</Button>
 				</Stack>
 				<Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
-					<DialogTitle sx={{fontFamily: '-apple-system'}}>Добавить альбом</DialogTitle>
+					<DialogTitle sx={{fontFamily: '-apple-system'}}>Добавить группу</DialogTitle>
 					<DialogContent>
 						<DialogContentText sx={{fontFamily: '-apple-system'}}>
 							Введите название группы, чтобы добавить его в EHM.

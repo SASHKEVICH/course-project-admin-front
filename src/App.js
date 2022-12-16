@@ -9,6 +9,7 @@ import RegistrationPage from "./pages/authentication/registration/registration";
 
 import AlbumsPage from "./pages/albumPage/albumsPage";
 import BandsPage from "./pages/bandPage/bandPage";
+import MembersPage from "./pages/memberPage/memberPage";
 
 import "./App.css";
 
@@ -48,6 +49,15 @@ const routes = [
 		main: (
 			<RequireAuth>
 				<BandsPage />
+			</RequireAuth>
+		),
+	},
+	{
+		path: "/members",
+		name: "Members",
+		main: (
+			<RequireAuth>
+				<MembersPage />
 			</RequireAuth>
 		),
 	},

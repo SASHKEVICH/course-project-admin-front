@@ -60,7 +60,7 @@ const AlbumsPage = () => {
 		},
 		{
 			field: 'explicit',
-			headerName: 'Откровенный',
+			headerName: 'Взрослый',
 			type: 'singleSelect',
 			editable: true,
 			width: 150,

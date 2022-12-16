@@ -10,6 +10,7 @@ import RegistrationPage from "./pages/authentication/registration/registration";
 import AlbumsPage from "./pages/albumPage/albumsPage";
 import BandsPage from "./pages/bandPage/bandPage";
 import MembersPage from "./pages/memberPage/memberPage";
+import SongsPage from "./pages/songPage/songPage";
 
 import "./App.css";
 
@@ -58,6 +59,15 @@ const routes = [
 		main: (
 			<RequireAuth>
 				<MembersPage />
+			</RequireAuth>
+		),
+	},
+	{
+		path: "/songs",
+		name: "Songs",
+		main: (
+			<RequireAuth>
+				<SongsPage />
 			</RequireAuth>
 		),
 	},

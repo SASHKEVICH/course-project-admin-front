@@ -68,13 +68,12 @@ const MembersPage = () => {
 		},
 		{
 			field: 'band',
-			headerName: 'Коллектив',
+			headerName: 'Группа',
 			editable: true,
 			width: 120,
 			type: 'singleSelect',
 			valueOptions: ({ row }) => {
 				const bands = membersBands.map(band => band.title);
-				console.log(membersBands);
 				return bands;
 			}
 		},

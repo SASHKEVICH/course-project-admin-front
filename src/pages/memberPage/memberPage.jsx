@@ -228,7 +228,7 @@ const MembersPage = () => {
 					rows={members}
 					columns={columns}
 					autoHeight
-					pageSize={10}
+					pageSize={5}
 					loading={members == null ? true : false}
 					checkboxSelection
 					disableSelectionOnClick

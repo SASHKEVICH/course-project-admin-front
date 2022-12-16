@@ -166,7 +166,7 @@ const SongsPage = () => {
 					rows={songs}
 					columns={columns}
 					autoHeight
-					pageSize={10}
+					pageSize={5}
 					loading={songs == null ? true : false}
 					checkboxSelection
 					disableSelectionOnClick
@@ -242,7 +242,7 @@ const SongsPage = () => {
 							autoFocus
 							margin="dense"
 							id="album"
-							label="Имя участника"
+							label="Название песни"
 							type="text"
 							fullWidth
 							onChange={(e) => handleNewAlbumTitleChanged(e)}

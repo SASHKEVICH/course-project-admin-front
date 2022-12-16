@@ -248,7 +248,7 @@ const AlbumsPage = () => {
 					rows={albums}
 					columns={columns}
 					autoHeight
-					pageSize={10}
+					pageSize={5}
 					loading={albums == null ? true : false}
 					checkboxSelection
 					disableSelectionOnClick

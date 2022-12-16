@@ -227,7 +227,7 @@ const BandsPage = () => {
 					rows={bands}
 					columns={columns}
 					autoHeight
-					pageSize={10}
+					pageSize={5}
 					loading={bands == null ? true : false}
 					checkboxSelection
 					disableSelectionOnClick
